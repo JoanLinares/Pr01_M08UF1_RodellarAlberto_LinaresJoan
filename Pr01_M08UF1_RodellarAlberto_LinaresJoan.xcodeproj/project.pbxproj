@@ -14,6 +14,9 @@
 		F1A033FB2D24174B00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A033FA2D24174B00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanTests.swift */; };
 		F1A034052D24174B00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A034042D24174B00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanUITests.swift */; };
 		F1A034072D24174B00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A034062D24174B00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanUITestsLaunchTests.swift */; };
+		F1A034172D2422D800601EE6 /* MenuViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A034162D2422D800601EE6 /* MenuViewModel.swift */; };
+		F1A034192D2422EB00601EE6 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A034182D2422EB00601EE6 /* Card.swift */; };
+		F1A0341B2D2422FA00601EE6 /* MenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A0341A2D2422FA00601EE6 /* MenuView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -44,6 +47,9 @@
 		F1A034002D24174B00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Pr01_M08UF1_RodellarAlberto_LinaresJoanUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1A034042D24174B00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pr01_M08UF1_RodellarAlberto_LinaresJoanUITests.swift; sourceTree = "<group>"; };
 		F1A034062D24174B00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pr01_M08UF1_RodellarAlberto_LinaresJoanUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		F1A034162D2422D800601EE6 /* MenuViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuViewModel.swift; sourceTree = "<group>"; };
+		F1A034182D2422EB00601EE6 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		F1A0341A2D2422FA00601EE6 /* MenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +100,9 @@
 		F1A033E82D24173D00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoan */ = {
 			isa = PBXGroup;
 			children = (
+				F1A034152D24213200601EE6 /* ViewModel */,
+				F1A034142D24212700601EE6 /* Models */,
+				F1A034132D24211800601EE6 /* Views */,
 				F1A033E92D24173D00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanApp.swift */,
 				F1A033EB2D24173D00601EE6 /* ContentView.swift */,
 				F1A033ED2D24174B00601EE6 /* Assets.xcassets */,
@@ -125,6 +134,30 @@
 				F1A034062D24174B00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanUITestsLaunchTests.swift */,
 			);
 			path = Pr01_M08UF1_RodellarAlberto_LinaresJoanUITests;
+			sourceTree = "<group>";
+		};
+		F1A034132D24211800601EE6 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				F1A0341A2D2422FA00601EE6 /* MenuView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		F1A034142D24212700601EE6 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				F1A034182D2422EB00601EE6 /* Card.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		F1A034152D24213200601EE6 /* ViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				F1A034162D2422D800601EE6 /* MenuViewModel.swift */,
+			);
+			path = ViewModel;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -257,8 +290,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F1A0341B2D2422FA00601EE6 /* MenuView.swift in Sources */,
+				F1A034172D2422D800601EE6 /* MenuViewModel.swift in Sources */,
 				F1A033EC2D24173D00601EE6 /* ContentView.swift in Sources */,
 				F1A033EA2D24173D00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanApp.swift in Sources */,
+				F1A034192D2422EB00601EE6 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
