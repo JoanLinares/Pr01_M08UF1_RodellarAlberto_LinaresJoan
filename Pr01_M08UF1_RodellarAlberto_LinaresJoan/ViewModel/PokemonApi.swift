@@ -69,8 +69,16 @@ class PokemonAPI {
             do {
                 let decoder = JSONDecoder()
                 let response = try decoder.decode(CardResponse.self, from: data)
-                print("Fetched cards from collection: \(response.data.count) cards")
-                completion(.success(response.data))
+
+                // Añadir el setID a cada carta
+                let cards = response.data.map { card -> Card in
+                    var mutableCard = card
+                    mutableCard.setID = collectionID
+                    return mutableCard
+                }
+
+                print("Fetched cards from collection: \(cards.count) cards")
+                completion(.success(cards))
             } catch {
                 print("Decoding error: \(error.localizedDescription)")
                 completion(.failure(error))
@@ -95,26 +103,4 @@ struct Set: Codable {
 // Modelo para la respuesta de cartas
 struct CardResponse: Codable {
     let data: [Card]
-}
-
-struct Card: Codable {
-    let id: String
-    let name: String
-    let images: CardImages
-    let cardmarket: CardMarket?
-}
-
-struct CardImages: Codable {
-    let small: String
-    let large: String
-}
-
-struct CardMarket: Codable {
-    let prices: MarketPrices
-}
-
-struct MarketPrices: Codable {
-    let averageSellPrice: Double?
-    let lowPrice: Double?
-    let trendPrice: Double?
 }
