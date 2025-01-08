@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F1207DDE2D2D89CD00BEED27 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1207DDD2D2D89CD00BEED27 /* TabBarView.swift */; };
+		F1207DE22D2D8A2A00BEED27 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1207DE12D2D8A2A00BEED27 /* InfoView.swift */; };
+		F1207DE42D2D8A4300BEED27 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1207DE32D2D8A4300BEED27 /* DeckView.swift */; };
+		F1207DE62D2D9AF100BEED27 /* CardDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1207DE52D2D9AF100BEED27 /* CardDetailView.swift */; };
+		F166F79E2D26AD27001A1531 /* PokemonApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = F166F79D2D26AD27001A1531 /* PokemonApi.swift */; };
+		F166F7A02D26AEF1001A1531 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = F166F79F2D26AEF1001A1531 /* ImageLoader.swift */; };
 		F1A033EA2D24173D00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A033E92D24173D00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanApp.swift */; };
 		F1A033EC2D24173D00601EE6 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1A033EB2D24173D00601EE6 /* ContentView.swift */; };
 		F1A033EE2D24174B00601EE6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F1A033ED2D24174B00601EE6 /* Assets.xcassets */; };
@@ -37,6 +43,12 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		F1207DDD2D2D89CD00BEED27 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
+		F1207DE12D2D8A2A00BEED27 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
+		F1207DE32D2D8A4300BEED27 /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
+		F1207DE52D2D9AF100BEED27 /* CardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
+		F166F79D2D26AD27001A1531 /* PokemonApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonApi.swift; sourceTree = "<group>"; };
+		F166F79F2D26AEF1001A1531 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		F1A033E62D24173D00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pr01_M08UF1_RodellarAlberto_LinaresJoan.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1A033E92D24173D00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pr01_M08UF1_RodellarAlberto_LinaresJoanApp.swift; sourceTree = "<group>"; };
 		F1A033EB2D24173D00601EE6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -140,6 +152,10 @@
 			isa = PBXGroup;
 			children = (
 				F1A0341A2D2422FA00601EE6 /* MenuView.swift */,
+				F1207DDD2D2D89CD00BEED27 /* TabBarView.swift */,
+				F1207DE12D2D8A2A00BEED27 /* InfoView.swift */,
+				F1207DE32D2D8A4300BEED27 /* DeckView.swift */,
+				F1207DE52D2D9AF100BEED27 /* CardDetailView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -156,6 +172,8 @@
 			isa = PBXGroup;
 			children = (
 				F1A034162D2422D800601EE6 /* MenuViewModel.swift */,
+				F166F79D2D26AD27001A1531 /* PokemonApi.swift */,
+				F166F79F2D26AEF1001A1531 /* ImageLoader.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -290,10 +308,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F166F7A02D26AEF1001A1531 /* ImageLoader.swift in Sources */,
+				F166F79E2D26AD27001A1531 /* PokemonApi.swift in Sources */,
+				F1207DDE2D2D89CD00BEED27 /* TabBarView.swift in Sources */,
 				F1A0341B2D2422FA00601EE6 /* MenuView.swift in Sources */,
 				F1A034172D2422D800601EE6 /* MenuViewModel.swift in Sources */,
+				F1207DE42D2D8A4300BEED27 /* DeckView.swift in Sources */,
 				F1A033EC2D24173D00601EE6 /* ContentView.swift in Sources */,
+				F1207DE62D2D9AF100BEED27 /* CardDetailView.swift in Sources */,
 				F1A033EA2D24173D00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanApp.swift in Sources */,
+				F1207DE22D2D8A2A00BEED27 /* InfoView.swift in Sources */,
 				F1A034192D2422EB00601EE6 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -461,6 +485,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -490,6 +515,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
