@@ -2,123 +2,92 @@ import SwiftUI
 
 struct MenuView: View {
     @StateObject private var viewModel = MenuViewModel()
-    @State private var searchQuery = "" // Estado del buscador
-    @State private var foundCard: Card? = nil // Carta encontrada
-    @State private var showError = false // Mostrar "Carta no encontrada"
-    @State private var selectedCard: Card? = nil // Carta seleccionada para el popup
+    @State private var minPrice: Double = 0 // Precio mínimo
 
     var body: some View {
         NavigationView {
-            VStack(spacing: 20) {
-                // Sección de las cartas más caras
-                VStack(alignment: .leading) {
-                    Text("Cartas más caras")
-                        .font(.headline)
-                        .bold()
-                        .padding([.top, .leading], 10)
+            VStack {
+                Text("Cards")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                    .padding(.top)
 
+                if viewModel.maxPriceLimit > 0 {
+                    VStack {
+                        Text("Filter by Price")
+                            .font(.headline)
+                            .padding(.top)
+
+                        HStack {
+                            Text("$\(Int(minPrice))")
+                            Slider(value: $minPrice, in: 0...viewModel.maxPriceLimit, step: 5)
+                                .onChange(of: minPrice) { _ in
+                                    viewModel.filterCards(minPrice: minPrice)
+                                }
+                            Text("Max: $\(Int(viewModel.maxPriceLimit))")
+                                .font(.headline)
+                                .foregroundColor(.gray)
+                        }
+                        .padding(.horizontal)
+                    }
+                }
+
+                ScrollView {
                     LazyVGrid(
-                        columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3), // 3 columnas
+                        columns: Array(repeating: GridItem(.flexible(), spacing: 10), count: 3),
                         spacing: 10
                     ) {
-                        ForEach(viewModel.expensiveCards, id: \.id) { card in
-                            VStack {
-                                Button(action: {
-                                    selectedCard = card // Abrir popup con la carta seleccionada
-                                }) {
+                        ForEach(viewModel.displayedCards, id: \.id) { card in
+                            NavigationLink(destination: CardDetailView(card: card)) {
+                                VStack {
                                     if let url = URL(string: card.images.large) {
                                         RemoteImage(url: url)
                                             .frame(width: 100, height: 140)
                                             .cornerRadius(8)
                                     }
+                                    Text("$\(card.cardmarket?.prices.trendPrice ?? 0, specifier: "%.2f")")
+                                        .font(.footnote)
+                                        .foregroundColor(.gray)
                                 }
-                                Text("Price: $\(card.cardmarket?.prices.trendPrice ?? 0, specifier: "%.2f")")
-                                    .font(.footnote)
-                                    .foregroundColor(.gray)
                             }
                         }
                     }
                     .padding()
-                    .background(Color.gray.opacity(0.2)) // Fondo gris claro
-                    .cornerRadius(12)
-                    .padding([.leading, .trailing])
                 }
 
-                // Buscador con botón de lupa
-                VStack {
-                    HStack {
-                        TextField("Search by Card Number", text: $searchQuery)
-                            .disabled(viewModel.allCards.isEmpty) // Deshabilitar si no hay cartas cargadas
-                            .textFieldStyle(RoundedBorderTextFieldStyle())
-                            .frame(maxWidth: .infinity) // Ajustar ancho para que quepa la lupa
-                            .padding([.leading])
-
-                        Button(action: {
-                            searchCard() // Acción al presionar la lupa
-                        }) {
-                            Image(systemName: "magnifyingglass")
-                                .padding()
-                        }
-                        .background(Color.blue)
-                        .foregroundColor(.white)
-                        .clipShape(Circle())
-                        .padding(.trailing)
+                HStack {
+                    Button(action: {
+                        viewModel.previousPage()
+                    }) {
+                        Image(systemName: "chevron.left")
+                            .font(.title3)
+                            .foregroundColor(viewModel.currentPage > 1 ? .blue : .gray)
+                            .padding(8)
                     }
-                    .padding(.horizontal)
+                    .disabled(viewModel.currentPage == 1)
 
-                    if showError {
-                        Text("Carta no encontrada")
-                            .foregroundColor(.red)
-                            .font(.caption)
-                    } else if let foundCard = foundCard {
-                        VStack {
-                            Button(action: {
-                                selectedCard = foundCard // Abrir popup con la carta encontrada
-                            }) {
-                                if let url = URL(string: foundCard.images.large) {
-                                    RemoteImage(url: url)
-                                        .frame(width: 120, height: 160)
-                                        .cornerRadius(8)
-                                }
-                            }
-                            Text("Price: $\(foundCard.cardmarket?.prices.trendPrice ?? 0, specifier: "%.2f")")
-                                .font(.footnote)
-                                .foregroundColor(.gray)
-                        }
-                        .padding(.top)
+                    Text("Page \(viewModel.currentPage) of \(viewModel.totalPages)")
+                        .font(.footnote)
+                        .padding(.horizontal)
+
+                    Button(action: {
+                        viewModel.nextPage()
+                    }) {
+                        Image(systemName: "chevron.right")
+                            .font(.title3)
+                            .foregroundColor(viewModel.currentPage < viewModel.totalPages ? .blue : .gray)
+                            .padding(8)
                     }
+                    .disabled(viewModel.currentPage == viewModel.totalPages)
                 }
+                .padding(.bottom)
             }
             .onAppear {
-                viewModel.loadExpensiveCards()
+                viewModel.loadCards()
             }
-            .navigationBarHidden(true) // Ocultar barra de navegación
             .alert(item: $viewModel.error) { error in
                 Alert(title: Text("Error"), message: Text(error.message), dismissButton: .default(Text("OK")))
             }
-            .sheet(item: $selectedCard) { card in
-                // Popup de la carta seleccionada
-                CardDetailView(card: card)
-            }
-        }
-    }
-
-    // Función para buscar la carta
-    private func searchCard() {
-        // Resetear la carta encontrada para forzar redibujado
-        foundCard = nil
-
-        // Validar el número y buscar la carta
-        if let card = viewModel.findCard(byNumber: searchQuery) {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
-                foundCard = card
-                showError = false
-                print("Found card: \(card.name) with number \(card.number)")
-            }
-        } else {
-            foundCard = nil
-            showError = true
-            print("Card not found with number: \(searchQuery)")
         }
     }
 }
