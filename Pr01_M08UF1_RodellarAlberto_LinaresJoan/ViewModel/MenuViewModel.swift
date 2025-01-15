@@ -6,13 +6,13 @@ class MenuViewModel: ObservableObject {
     @Published var error: AppError? // Mostrar errores
     @Published var currentPage: Int = 1 // Página actual
     @Published var totalPages: Int = 1 // Número total de páginas
-    @Published var maxPriceLimit: Double = 0 // Precio máximo redondeado hacia arriba
+    @Published var maxPriceLimit: Double = 50 // Precio máximo estático
 
     private let api = PokemonAPI() // Instancia de la clase API
     private var allCards: [Card] = [] // Todas las cartas del último paquete
 
     // Número de cartas por página (actualizado a 21)
-    private let pageSize = 21
+    private let pageSize = 24
 
     // Cargar cartas ordenadas por precio descendente
     func loadCards() {
@@ -27,7 +27,6 @@ class MenuViewModel: ObservableObject {
                                 self?.allCards = cards
                                     .filter { $0.cardmarket?.prices.trendPrice != nil }
                                     .sorted { ($0.cardmarket?.prices.trendPrice ?? 0) > ($1.cardmarket?.prices.trendPrice ?? 0) }
-                                self?.setMaxPriceLimit()
                                 self?.resetFilters() // Mostrar todas las cartas al principio
                             case .failure(let error):
                                 self?.error = AppError(message: error.localizedDescription)
@@ -38,15 +37,6 @@ class MenuViewModel: ObservableObject {
                     self?.error = AppError(message: error.localizedDescription)
                 }
             }
-        }
-    }
-
-    // Establecer el precio máximo basado en la carta más cara
-    private func setMaxPriceLimit() {
-        if let maxPrice = allCards.first?.cardmarket?.prices.trendPrice {
-            maxPriceLimit = ceil(maxPrice) // Redondear hacia arriba
-        } else {
-            maxPriceLimit = 0
         }
     }
 
@@ -66,15 +56,21 @@ class MenuViewModel: ObservableObject {
     // Filtrar cartas por rango de precio
     func filterCards(minPrice: Double) {
         if minPrice == 0 {
-            resetFilters()
+            // Mostrar todas las cartas en orden descendente (caro a barato)
+            filteredCards = allCards.sorted {
+                ($0.cardmarket?.prices.trendPrice ?? 0) > ($1.cardmarket?.prices.trendPrice ?? 0)
+            }
         } else {
+            // Mostrar cartas en orden ascendente (barato a caro) dentro del rango
             filteredCards = allCards.filter {
                 let price = $0.cardmarket?.prices.trendPrice ?? 0
                 return price >= minPrice
-            }.sorted { ($0.cardmarket?.prices.trendPrice ?? 0) < ($1.cardmarket?.prices.trendPrice ?? 0) }
-            currentPage = 1
-            updatePagination()
+            }.sorted {
+                ($0.cardmarket?.prices.trendPrice ?? 0) < ($1.cardmarket?.prices.trendPrice ?? 0)
+            }
         }
+        currentPage = 1
+        updatePagination()
     }
 
     // Cargar la página actual
