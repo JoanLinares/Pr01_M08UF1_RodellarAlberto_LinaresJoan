@@ -11,7 +11,7 @@ struct MainTabBarView: View {
             // Pestaña derecha - Deck
             DeckView()
                 .tabItem {
-                    Label("Deck", systemImage: "rectangle.stack") // Ícono de tarjetas
+                    Label("Decks", systemImage: "rectangle.stack") // Ícono de tarjetas
                 }
             // Pestaña izquierda - Información
             InfoView()
