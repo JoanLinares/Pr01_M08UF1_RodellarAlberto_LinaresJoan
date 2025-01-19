@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct MainTabBarView: View {
+    @StateObject var deckViewModel = DeckViewModel() // Crear la instancia del ViewModel
+
     var body: some View {
         TabView {
             // Pestaña central - Home Page
@@ -9,10 +11,11 @@ struct MainTabBarView: View {
                     Label("Home", systemImage: "house") // Ícono de casa
                 }
             // Pestaña derecha - Deck
-            DeckView()
+            DeckView() // No necesitas pasar el ViewModel aquí, porque DeckView lo obtendrá desde el entorno
                 .tabItem {
                     Label("Decks", systemImage: "rectangle.stack") // Ícono de tarjetas
                 }
+                .environmentObject(deckViewModel) // Inyecta el ViewModel en el entorno
             // Pestaña izquierda - Información
             InfoView()
                 .tabItem {
