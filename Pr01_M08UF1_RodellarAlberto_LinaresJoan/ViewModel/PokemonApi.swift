@@ -76,6 +76,38 @@ class PokemonAPI {
             }
         }.resume()
     }
+    
+    func fetchAllTypes(completion: @escaping (Result<[String], Error>) -> Void) {
+        guard let url = URL(string: "\(baseURL)/types") else {
+            completion(.failure(NSError(domain: "Invalid URL", code: -1, userInfo: nil)))
+            return
+        }
+
+        var request = URLRequest(url: url)
+        request.httpMethod = "GET"
+        request.setValue(apiKey, forHTTPHeaderField: "X-Api-Key")
+
+        URLSession.shared.dataTask(with: request) { data, response, error in
+            if let error = error {
+                completion(.failure(error))
+                return
+            }
+
+            guard let data = data else {
+                completion(.failure(NSError(domain: "No data", code: -1, userInfo: nil)))
+                return
+            }
+
+            do {
+                let decoder = JSONDecoder()
+                let response = try decoder.decode(TypesResponse.self, from: data)
+                completion(.success(response.data))
+            } catch {
+                completion(.failure(error))
+            }
+        }.resume()
+    }
+
 }
 
 // Modelos de Datos
@@ -91,4 +123,8 @@ struct Set: Codable {
 
 struct CardResponse: Codable {
     let data: [Card]
+}
+
+struct TypesResponse: Codable {
+    let data: [String]
 }

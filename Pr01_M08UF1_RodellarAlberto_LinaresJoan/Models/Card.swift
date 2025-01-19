@@ -4,6 +4,8 @@ import Foundation
 struct Card: Codable, Identifiable {
     let id: String
     let name: String
+    let types: [String]?
+    let supertype: String
     let images: CardImages
     let cardmarket: CardMarket?
     var setID: String? // Propiedad mutable para guardar el setID
