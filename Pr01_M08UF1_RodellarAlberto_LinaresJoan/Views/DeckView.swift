@@ -29,7 +29,7 @@ struct DeckView: View {
                                     Text(deck.name)
                                         .font(.headline)
                                     
-                                    Text("Tipo: \(deck.type)")
+                                    Text("Type: \(deck.type)")
                                         .font(.subheadline)
                                     
                                     if let featuredCard = deck.featuredCard {
@@ -43,7 +43,13 @@ struct DeckView: View {
                             }
                             .padding(.vertical, 5)
                         }
-                        .onDelete(perform: deleteDeck) // Acción de eliminar
+                        .onDelete { offsets in
+                            // Llamamos a la función deleteDeck del ViewModel directamente
+                            for index in offsets {
+                                let deck = viewModel.decks[index]
+                                viewModel.deleteDeck(id: deck.id) // Llamamos a deleteDeck en el VM
+                            }
+                        }
                     }
                 }
 
@@ -59,10 +65,5 @@ struct DeckView: View {
                 }
             }
         }
-    }
-    
-    // Función para eliminar un mazo
-    private func deleteDeck(at offsets: IndexSet) {
-        viewModel.decks.remove(atOffsets: offsets)
     }
 }

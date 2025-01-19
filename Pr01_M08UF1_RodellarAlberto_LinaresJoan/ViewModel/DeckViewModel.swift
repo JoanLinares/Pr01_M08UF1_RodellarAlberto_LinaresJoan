@@ -11,6 +11,13 @@ class DeckViewModel: ObservableObject {
         decks.append(newDeck)
     }
     
+    // Función para eliminar un deck
+    func deleteDeck(id: String) {
+        if let index = decks.firstIndex(where: { $0.id == id }) {
+            decks.remove(at: index)
+        }
+    }
+    
     // Función para establecer una carta destacada
     func setFeaturedCard(for deck: Deck, card: Card) {
         var updatedDeck = deck
