@@ -7,11 +7,12 @@ class MenuViewModel: ObservableObject {
     @Published var currentPage: Int = 1 // Página actual
     @Published var totalPages: Int = 1 // Número total de páginas
     @Published var maxPriceLimit: Double = 50 // Precio máximo estático
+    @Published var activeFilterPrice: Double = 0 // Precio mínimo activo
 
     private let api = PokemonAPI() // Instancia de la clase API
     private var allCards: [Card] = [] // Todas las cartas del último paquete
 
-    // Número de cartas por página (actualizado a 21)
+    // Número de cartas por página
     private let pageSize = 24
 
     // Cargar cartas ordenadas por precio descendente
@@ -42,6 +43,7 @@ class MenuViewModel: ObservableObject {
 
     // Restablecer filtros y mostrar todas las cartas
     func resetFilters() {
+        activeFilterPrice = 0 // Eliminar el filtro actual
         filteredCards = allCards
         currentPage = 1
         updatePagination()
@@ -55,6 +57,9 @@ class MenuViewModel: ObservableObject {
 
     // Filtrar cartas por rango de precio
     func filterCards(minPrice: Double) {
+        guard !allCards.isEmpty else { return } // No filtrar si las cartas aún no se han cargado
+
+        activeFilterPrice = minPrice // Guardar el filtro activo
         if minPrice == 0 {
             // Mostrar todas las cartas en orden descendente (caro a barato)
             filteredCards = allCards.sorted {
