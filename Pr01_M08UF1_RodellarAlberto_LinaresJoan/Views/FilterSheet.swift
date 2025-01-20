@@ -68,8 +68,5 @@ struct FilterSheet: View {
                 }
             }
         }
-        .onAppear {
-            viewModel.fetchAllTypes() // Cargar los tipos al abrir la hoja
-        }
     }
 }

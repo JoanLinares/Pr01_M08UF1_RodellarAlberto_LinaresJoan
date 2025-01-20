@@ -23,6 +23,12 @@ struct CardListView: View {
             VStack(spacing: 0) {
                 // Botón de "Save"
                 HStack {
+                    TextField("Enter deck name", text: $deckName)
+                        .padding()
+                        .background(Color(.systemGray6))
+                        .cornerRadius(8)
+                        .padding(.horizontal)
+                    
                     Spacer()
                     Button(action: {
                         // Llamamos a la función createDeck de DeckViewModel
@@ -45,30 +51,21 @@ struct CardListView: View {
                     .disabled(deckName.isEmpty || selectedCards.count < 1) // Deshabilitar el botón si no se cumplen las condiciones
                 }
                 .padding(.trailing, 20) // Agregar espacio entre el borde derecho y el botón
-                .background(Color(.systemBackground))
-                .zIndex(1)
-                
-                // Campo para ingresar el nombre del mazo
-                HStack {
-                    TextField("Enter deck name", text: $deckName)
-                        .padding()
-                        .background(Color(.systemGray6))
-                        .cornerRadius(8)
-                        .padding(.horizontal)
-                    
-                    Spacer()
-                }
-                .padding(.vertical, 10)
                 
                 // Desplegable para seleccionar el tipo del mazo
                 if !types.isEmpty {
-                    List {
-                        Picker("Select a type of deck", selection: $selectedDeckType) {
+                    HStack {
+                        Text("Select a type of deck: ")
+                            .font(.headline)
+                        
+                        Picker("", selection: $selectedDeckType) {
                             ForEach(types, id: \.self) { type in
                                 Text(type).tag(type)
                             }
                         }
+                        .pickerStyle(MenuPickerStyle()) // Estilo desplegable
                     }
+                    .padding(.vertical, 10) // Espacio alrededor del Picker
                 }
                 
                 // Texto con número de cartas seleccionadas
@@ -96,7 +93,7 @@ struct CardListView: View {
                 
                 // Barra de búsqueda
                 HStack {
-                    TextField("Search by card name", text: $searchText)
+                    TextField("Search by card name or ID", text: $searchText)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(8)
@@ -117,34 +114,35 @@ struct CardListView: View {
                 .padding(.vertical, 10)
                 
                 CardGridView(selectedCards: $selectedCards, filteredCards: viewModel.filteredCards, isLandscape: isLandscape)
-                                    .padding(.top, 10)
-                }
-            }
-            .onAppear {
-                viewModel.fetchAllCards()
-                viewModel.fetchAllTypes()
-            }
-            .onReceive(viewModel.$types) { fetchedTypes in
-                types = fetchedTypes
-                if !fetchedTypes.isEmpty {
-                    selectedDeckType = fetchedTypes.first ?? ""
-                }
-            }
-            .alert(item: $viewModel.error) { error in
-                Alert(title: Text("Error"), message: Text(error.message), dismissButton: .default(Text("OK")))
-            }
-            .sheet(isPresented: $showFilterSheet) {
-                FilterSheet(selectedType: $selectedType, showFilterSheet: $showFilterSheet, viewModel: viewModel)
-            }
-            .alert(isPresented: $showSaveAlert) {
-                Alert(
-                    title: Text("Deck Saved"),
-                    message: Text("Your deck has been successfully saved!"),
-                    dismissButton: .default(Text("OK"), action: {
-                        presentationMode.wrappedValue.dismiss()
-                    })
-                )
+                    .padding(.top, 10)
             }
         }
+        .navigationTitle("Create a new deck")
+        .onAppear {
+            viewModel.fetchAllCards()
+            viewModel.fetchAllTypes()
+        }
+        .onReceive(viewModel.$types) { fetchedTypes in
+            types = fetchedTypes
+            if !fetchedTypes.isEmpty {
+                selectedDeckType = fetchedTypes.first ?? ""
+            }
+        }
+        .alert(item: $viewModel.error) { error in
+            Alert(title: Text("Error"), message: Text(error.message), dismissButton: .default(Text("OK")))
+        }
+        .sheet(isPresented: $showFilterSheet) {
+            FilterSheet(selectedType: $selectedType, showFilterSheet: $showFilterSheet, viewModel: viewModel)
+        }
+        .alert(isPresented: $showSaveAlert) {
+            Alert(
+                title: Text("Deck Saved"),
+                message: Text("Your deck has been successfully saved!"),
+                dismissButton: .default(Text("OK"), action: {
+                    presentationMode.wrappedValue.dismiss()
+                })
+            )
+        }
     }
+}
 
