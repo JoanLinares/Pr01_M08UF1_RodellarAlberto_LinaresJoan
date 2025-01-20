@@ -16,9 +16,8 @@ struct CardListView: View {
     
     @State private var showSaveAlert = false
     @State private var isEditing = false
-    @State private var deckToEdit: Deck? // Deck que se va a editar
-
-    // Inicializador que recibe la información del deck
+    @State private var deckToEdit: Deck?
+    
     init(selectedCards: [Card], deckName: String, selectedDeckType: String, deckToEdit: Deck?) {
         _selectedCards = State(initialValue: selectedCards)
         _deckName = State(initialValue: deckName)
@@ -26,7 +25,7 @@ struct CardListView: View {
         _deckToEdit = State(initialValue: deckToEdit)
         _isEditing = State(initialValue: deckToEdit != nil)
     }
-
+    
     var body: some View {
         GeometryReader { geometry in
             let isLandscape = geometry.size.width > geometry.size.height
@@ -42,7 +41,6 @@ struct CardListView: View {
                     Spacer()
                     Button(action: {
                         if let deckToEdit = deckToEdit {
-                            // Llamamos a la función updateDeck si estamos editando un deck existente
                             deckViewModel.updateDeck(
                                 id: deckToEdit.id,
                                 newName: deckName,
@@ -51,7 +49,6 @@ struct CardListView: View {
                                 newFeaturedCard: selectedCards.first
                             )
                         } else {
-                            // Crear un nuevo deck si no estamos editando
                             deckViewModel.createDeck(
                                 name: deckName,
                                 type: selectedDeckType,
@@ -115,8 +112,8 @@ struct CardListView: View {
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(8)
-                        .onChange(of: searchText) { _ in
-                            viewModel.searchCards(by: searchText)
+                        .onChange(of: searchText) { newValue in
+                            viewModel.updateSearchText(newValue)
                         }
                         .padding(.horizontal)
                     

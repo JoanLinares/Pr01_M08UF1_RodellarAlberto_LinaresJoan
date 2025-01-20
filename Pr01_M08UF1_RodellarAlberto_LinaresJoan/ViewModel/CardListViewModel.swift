@@ -1,15 +1,17 @@
 import Foundation
 
 class CardListViewModel: ObservableObject {
-    @Published var cards: [Card] = [] // Todas las cartas
-    @Published var filteredCards: [Card] = [] // Cartas filtradas
-    @Published var error: AppError? // Manejo de errores
-    @Published var isEmptySearchResult: Bool = false // Indica si no se encontró ninguna carta
-    @Published var types: [String] = [] // Lista de tipos de cartas disponibles
+    @Published var cards: [Card] = []
+    @Published var filteredCards: [Card] = []
+    @Published var error: AppError?
+    @Published var isEmptySearchResult: Bool = false
+    @Published var types: [String] = []
     
-    private let api = PokemonAPI() // Instancia de la clase API
+    private let api = PokemonAPI()
     
-    // Cargar todas las cartas
+    private var searchText: String = ""
+    private var selectedType: String? = nil
+    
     func fetchAllCards() {
         api.fetchLatestCollection { [weak self] result in
             DispatchQueue.main.async {
@@ -20,7 +22,7 @@ class CardListViewModel: ObservableObject {
                             switch result {
                             case .success(let fetchedCards):
                                 self?.cards = self?.sortCards(fetchedCards) ?? []
-                                self?.filteredCards = self?.cards ?? []
+                                self?.applyFilters()
                             case .failure(let error):
                                 self?.error = AppError(message: error.localizedDescription)
                             }
@@ -33,7 +35,6 @@ class CardListViewModel: ObservableObject {
         }
     }
     
-    // Cargar todos los tipos
     func fetchAllTypes() {
         api.fetchAllTypes { [weak self] result in
             DispatchQueue.main.async {
@@ -47,47 +48,25 @@ class CardListViewModel: ObservableObject {
         }
     }
     
-    // Buscar cartas por nombre o ID
-    func searchCards(by searchText: String) {
-        if searchText.isEmpty {
-            filteredCards = cards // Si no hay texto de búsqueda, mostrar todas las cartas
-            isEmptySearchResult = false
-        } else {
-            if searchText.rangeOfCharacter(from: .decimalDigits) != nil {
-                filteredCards = cards.filter { card in
-                    card.id.split(separator: "-").last?.lowercased() == searchText.lowercased()
-                }
-                isEmptySearchResult = filteredCards.isEmpty
-            } else {
-                filteredCards = cards.filter { card in
-                    card.name.lowercased().contains(searchText.lowercased()) // Comparar nombres de cartas
-                }
-                isEmptySearchResult = filteredCards.isEmpty // Si no hay cartas filtradas, marcar como vacío
-            }
-        }
+    func updateSearchText(_ text: String) {
+        searchText = text
+        applyFilters()
     }
     
-    // Filtrar cartas por tipo
-    func filterCards(by type: String) {
-        if type.isEmpty {
-            filteredCards = cards // Si no hay tipo especificado, mostrar todas las cartas
-            isEmptySearchResult = false
-        } else {
-            if type == "trainer" {
-                filteredCards = cards.filter { card in
-                    card.supertype.lowercased() == type.lowercased()
-                }
-            } else {
-                filteredCards = cards.filter { card in
-                    guard let cardTypes = card.types else { return false }
-                    return cardTypes.contains { $0.lowercased() == type.lowercased() }
-                }
-            }
-            isEmptySearchResult = filteredCards.isEmpty // Indicar si no se encontraron cartas
-        }
+    func updateSelectedType(_ type: String?) {
+        selectedType = type
+        applyFilters()
     }
     
-    // Método para ordenar las cartas
+    private func applyFilters() {
+        filteredCards = cards.filter { card in
+            let matchesSearchText = searchText.isEmpty || card.name.lowercased().contains(searchText.lowercased()) || card.id.lowercased() == searchText.lowercased()
+            let matchesType = selectedType == nil || selectedType!.isEmpty || (selectedType!.lowercased() == "trainer" && card.supertype.lowercased() == "trainer") || (card.types?.contains { $0.lowercased() == selectedType!.lowercased() } ?? false)
+            return matchesSearchText && matchesType
+        }
+        isEmptySearchResult = filteredCards.isEmpty
+    }
+    
     private func sortCards(_ cards: [Card]) -> [Card] {
         return cards.sorted { card1, card2 in
             guard
