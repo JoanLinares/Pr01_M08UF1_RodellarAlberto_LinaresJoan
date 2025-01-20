@@ -10,18 +10,28 @@ struct CardListView: View {
     @State private var showFilterSheet = false
     
     @State private var selectedCards: [Card] = []
-    @State private var deckName: String = "" // Nombre del mazo ingresado por el usuario
-    @State private var types: [String] = []  // Tipos disponibles
-    @State private var selectedDeckType: String = "" // Tipo seleccionado para el mazo
+    @State private var deckName: String = ""
+    @State private var types: [String] = []
+    @State private var selectedDeckType: String = ""
     
     @State private var showSaveAlert = false
-    
+    @State private var isEditing = false
+    @State private var deckToEdit: Deck? // Deck que se va a editar
+
+    // Inicializador que recibe la información del deck
+    init(selectedCards: [Card], deckName: String, selectedDeckType: String, deckToEdit: Deck?) {
+        _selectedCards = State(initialValue: selectedCards)
+        _deckName = State(initialValue: deckName)
+        _selectedDeckType = State(initialValue: selectedDeckType)
+        _deckToEdit = State(initialValue: deckToEdit)
+        _isEditing = State(initialValue: deckToEdit != nil)
+    }
+
     var body: some View {
         GeometryReader { geometry in
             let isLandscape = geometry.size.width > geometry.size.height
             
             VStack(spacing: 0) {
-                // Botón de "Save"
                 HStack {
                     TextField("Enter deck name", text: $deckName)
                         .padding()
@@ -31,28 +41,38 @@ struct CardListView: View {
                     
                     Spacer()
                     Button(action: {
-                        // Llamamos a la función createDeck de DeckViewModel
-                        deckViewModel.createDeck(
-                            name: deckName,
-                            type: selectedDeckType,
-                            cards: selectedCards,
-                            featuredCard: selectedCards.first
-                        )
+                        if let deckToEdit = deckToEdit {
+                            // Llamamos a la función updateDeck si estamos editando un deck existente
+                            deckViewModel.updateDeck(
+                                id: deckToEdit.id,
+                                newName: deckName,
+                                newType: selectedDeckType,
+                                newCards: selectedCards,
+                                newFeaturedCard: selectedCards.first
+                            )
+                        } else {
+                            // Crear un nuevo deck si no estamos editando
+                            deckViewModel.createDeck(
+                                name: deckName,
+                                type: selectedDeckType,
+                                cards: selectedCards,
+                                featuredCard: selectedCards.first
+                            )
+                        }
                         
                         showSaveAlert = true
                     }) {
-                        Text("Save")
+                        Text(isEditing ? "Update" : "Save")
                             .font(.title2)
                             .foregroundColor(.white)
                     }
                     .padding(10)
-                    .background(deckName.isEmpty || selectedCards.count < 1 ? Color.gray : Color.blue) // Cambiar el color de fondo según si está habilitado o no
+                    .background(deckName.isEmpty || selectedCards.count < 1 ? Color.gray : Color.blue)
                     .cornerRadius(8)
-                    .disabled(deckName.isEmpty || selectedCards.count < 1) // Deshabilitar el botón si no se cumplen las condiciones
+                    .disabled(deckName.isEmpty || selectedCards.count < 1)
                 }
-                .padding(.trailing, 20) // Agregar espacio entre el borde derecho y el botón
+                .padding(.trailing, 20)
                 
-                // Desplegable para seleccionar el tipo del mazo
                 if !types.isEmpty {
                     HStack {
                         Text("Select a type of deck: ")
@@ -63,12 +83,11 @@ struct CardListView: View {
                                 Text(type).tag(type)
                             }
                         }
-                        .pickerStyle(MenuPickerStyle()) // Estilo desplegable
+                        .pickerStyle(MenuPickerStyle())
                     }
-                    .padding(.vertical, 10) // Espacio alrededor del Picker
+                    .padding(.vertical, 10)
                 }
                 
-                // Texto con número de cartas seleccionadas
                 if !selectedCards.isEmpty {
                     VStack(spacing: 5) {
                         Text("\(selectedCards.count)/20 cards selected")
@@ -91,7 +110,6 @@ struct CardListView: View {
                     .padding(.top, 10)
                 }
                 
-                // Barra de búsqueda
                 HStack {
                     TextField("Search by card name or ID", text: $searchText)
                         .padding()
@@ -117,14 +135,14 @@ struct CardListView: View {
                     .padding(.top, 10)
             }
         }
-        .navigationTitle("Create a new deck")
+        .navigationTitle(isEditing ? "Edit Deck" : "Create a new deck")
         .onAppear {
             viewModel.fetchAllCards()
             viewModel.fetchAllTypes()
         }
         .onReceive(viewModel.$types) { fetchedTypes in
             types = fetchedTypes
-            if !fetchedTypes.isEmpty {
+            if !fetchedTypes.isEmpty && selectedDeckType.isEmpty {
                 selectedDeckType = fetchedTypes.first ?? ""
             }
         }
@@ -136,8 +154,8 @@ struct CardListView: View {
         }
         .alert(isPresented: $showSaveAlert) {
             Alert(
-                title: Text("Deck Saved"),
-                message: Text("Your deck has been successfully saved!"),
+                title: Text(isEditing ? "Deck Updated" : "Deck Saved"),
+                message: Text(isEditing ? "Your deck has been successfully updated!" : "Your deck has been successfully saved!"),
                 dismissButton: .default(Text("OK"), action: {
                     presentationMode.wrappedValue.dismiss()
                 })
@@ -145,4 +163,3 @@ struct CardListView: View {
         }
     }
 }
-

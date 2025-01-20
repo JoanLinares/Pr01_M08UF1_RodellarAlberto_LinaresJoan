@@ -48,6 +48,17 @@ struct DeckView: View {
                                 Spacer()
                             }
                             .padding(.vertical, 5)
+                            .background(
+                                NavigationLink(destination: CardListView(
+                                    selectedCards: deck.cards,
+                                    deckName: deck.name,
+                                    selectedDeckType: deck.type,
+                                    deckToEdit: deck
+                                )) {
+                                    EmptyView()
+                                }
+                                .opacity(0)
+                            )
                         }
                         .onDelete { offsets in
                             for index in offsets {
@@ -63,7 +74,12 @@ struct DeckView: View {
             .navigationTitle("Decks")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    NavigationLink(destination: CardListView()) {
+                    NavigationLink(destination: CardListView(
+                        selectedCards: [],
+                        deckName: "",
+                        selectedDeckType: "",
+                        deckToEdit: nil
+                    )) {
                         Image(systemName: "plus")
                             .font(.title2)
                     }
