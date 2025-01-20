@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5451E72F2D3D78E300BC473D /* Deck.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5451E72E2D3D78DD00BC473D /* Deck.swift */; };
+		5451E7312D3D790A00BC473D /* DeckViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5451E7302D3D790A00BC473D /* DeckViewModel.swift */; };
+		5451E7372D3DC4B500BC473D /* CardGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5451E7362D3DC4B500BC473D /* CardGridView.swift */; };
+		546D2B062D3AE2A100DBF193 /* FilterSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 546D2B052D3AE2A100DBF193 /* FilterSheet.swift */; };
+		5485614A2D3AABB5008B2AFA /* CardListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 548561492D3AABB4008B2AFA /* CardListView.swift */; };
+		5485614C2D3AABE0008B2AFA /* CardListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5485614B2D3AABE0008B2AFA /* CardListViewModel.swift */; };
 		F1207DDE2D2D89CD00BEED27 /* TabBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1207DDD2D2D89CD00BEED27 /* TabBarView.swift */; };
 		F1207DE22D2D8A2A00BEED27 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1207DE12D2D8A2A00BEED27 /* InfoView.swift */; };
 		F1207DE42D2D8A4300BEED27 /* DeckView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1207DE32D2D8A4300BEED27 /* DeckView.swift */; };
@@ -43,13 +49,19 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		5451E72E2D3D78DD00BC473D /* Deck.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Deck.swift; sourceTree = "<group>"; };
+		5451E7302D3D790A00BC473D /* DeckViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckViewModel.swift; sourceTree = "<group>"; };
+		5451E7362D3DC4B500BC473D /* CardGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardGridView.swift; sourceTree = "<group>"; };
+		546D2B052D3AE2A100DBF193 /* FilterSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSheet.swift; sourceTree = "<group>"; };
+		548561492D3AABB4008B2AFA /* CardListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListView.swift; sourceTree = "<group>"; };
+		5485614B2D3AABE0008B2AFA /* CardListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardListViewModel.swift; sourceTree = "<group>"; };
 		F1207DDD2D2D89CD00BEED27 /* TabBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarView.swift; sourceTree = "<group>"; };
 		F1207DE12D2D8A2A00BEED27 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		F1207DE32D2D8A4300BEED27 /* DeckView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeckView.swift; sourceTree = "<group>"; };
 		F1207DE52D2D9AF100BEED27 /* CardDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardDetailView.swift; sourceTree = "<group>"; };
 		F166F79D2D26AD27001A1531 /* PokemonApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonApi.swift; sourceTree = "<group>"; };
 		F166F79F2D26AEF1001A1531 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
-		F1A033E62D24173D00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoan.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pr01_M08UF1_RodellarAlberto_LinaresJoan.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		F1A033E62D24173D00601EE6 /* PMTCG Hub.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PMTCG Hub.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		F1A033E92D24173D00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pr01_M08UF1_RodellarAlberto_LinaresJoanApp.swift; sourceTree = "<group>"; };
 		F1A033EB2D24173D00601EE6 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		F1A033ED2D24174B00601EE6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -102,7 +114,7 @@
 		F1A033E72D24173D00601EE6 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				F1A033E62D24173D00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoan.app */,
+				F1A033E62D24173D00601EE6 /* PMTCG Hub.app */,
 				F1A033F62D24174B00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanTests.xctest */,
 				F1A034002D24174B00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanUITests.xctest */,
 			);
@@ -156,6 +168,9 @@
 				F1207DE12D2D8A2A00BEED27 /* InfoView.swift */,
 				F1207DE32D2D8A4300BEED27 /* DeckView.swift */,
 				F1207DE52D2D9AF100BEED27 /* CardDetailView.swift */,
+				548561492D3AABB4008B2AFA /* CardListView.swift */,
+				5451E7362D3DC4B500BC473D /* CardGridView.swift */,
+				546D2B052D3AE2A100DBF193 /* FilterSheet.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -164,6 +179,7 @@
 			isa = PBXGroup;
 			children = (
 				F1A034182D2422EB00601EE6 /* Card.swift */,
+				5451E72E2D3D78DD00BC473D /* Deck.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -171,7 +187,9 @@
 		F1A034152D24213200601EE6 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				5451E7302D3D790A00BC473D /* DeckViewModel.swift */,
 				F1A034162D2422D800601EE6 /* MenuViewModel.swift */,
+				5485614B2D3AABE0008B2AFA /* CardListViewModel.swift */,
 				F166F79D2D26AD27001A1531 /* PokemonApi.swift */,
 				F166F79F2D26AEF1001A1531 /* ImageLoader.swift */,
 			);
@@ -195,7 +213,7 @@
 			);
 			name = Pr01_M08UF1_RodellarAlberto_LinaresJoan;
 			productName = Pr01_M08UF1_RodellarAlberto_LinaresJoan;
-			productReference = F1A033E62D24173D00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoan.app */;
+			productReference = F1A033E62D24173D00601EE6 /* PMTCG Hub.app */;
 			productType = "com.apple.product-type.application";
 		};
 		F1A033F52D24174B00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanTests */ = {
@@ -308,16 +326,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5485614C2D3AABE0008B2AFA /* CardListViewModel.swift in Sources */,
+				5451E7312D3D790A00BC473D /* DeckViewModel.swift in Sources */,
 				F166F7A02D26AEF1001A1531 /* ImageLoader.swift in Sources */,
 				F166F79E2D26AD27001A1531 /* PokemonApi.swift in Sources */,
 				F1207DDE2D2D89CD00BEED27 /* TabBarView.swift in Sources */,
 				F1A0341B2D2422FA00601EE6 /* MenuView.swift in Sources */,
+				546D2B062D3AE2A100DBF193 /* FilterSheet.swift in Sources */,
 				F1A034172D2422D800601EE6 /* MenuViewModel.swift in Sources */,
 				F1207DE42D2D8A4300BEED27 /* DeckView.swift in Sources */,
 				F1A033EC2D24173D00601EE6 /* ContentView.swift in Sources */,
 				F1207DE62D2D9AF100BEED27 /* CardDetailView.swift in Sources */,
 				F1A033EA2D24173D00601EE6 /* Pr01_M08UF1_RodellarAlberto_LinaresJoanApp.swift in Sources */,
+				5451E72F2D3D78E300BC473D /* Deck.swift in Sources */,
 				F1207DE22D2D8A2A00BEED27 /* InfoView.swift in Sources */,
+				5451E7372D3DC4B500BC473D /* CardGridView.swift in Sources */,
+				5485614A2D3AABB5008B2AFA /* CardListView.swift in Sources */,
 				F1A034192D2422EB00601EE6 /* Card.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -492,7 +516,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "LaSalle.Pr01-M08UF1-RodellarAlberto-LinaresJoan";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "PMTCG Hub";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -522,7 +546,7 @@
 				);
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "LaSalle.Pr01-M08UF1-RodellarAlberto-LinaresJoan";
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = "PMTCG Hub";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
