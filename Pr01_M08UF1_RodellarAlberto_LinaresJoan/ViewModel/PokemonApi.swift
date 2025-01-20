@@ -3,42 +3,11 @@ import Foundation
 class PokemonAPI {
     private let baseURL = "https://api.pokemontcg.io/v2"
     private let apiKey = "a1758e34-8404-4445-a047-c186c07419a2"
-    
+
     func fetchLatestCollection(completion: @escaping (Result<String, Error>) -> Void) {
-        guard let url = URL(string: "\(baseURL)/sets?orderBy=-releaseDate") else {
-            completion(.failure(NSError(domain: "Invalid URL", code: -1, userInfo: nil)))
-            return
-        }
-
-        var request = URLRequest(url: url)
-        request.httpMethod = "GET"
-        request.setValue(apiKey, forHTTPHeaderField: "X-Api-Key")
-
-        URLSession.shared.dataTask(with: request) { data, response, error in
-            if let error = error {
-                completion(.failure(error))
-                return
-            }
-
-            guard let data = data else {
-                completion(.failure(NSError(domain: "No data", code: -1, userInfo: nil)))
-                return
-            }
-
-            do {
-                let decoder = JSONDecoder()
-                let response = try decoder.decode(SetResponse.self, from: data)
-                if let latestSet = response.data.first {
-                    completion(.success(latestSet.id))
-                } else {
-                    completion(.failure(NSError(domain: "No sets found", code: -1, userInfo: nil)))
-                }
-            } catch {
-                completion(.failure(error))
-            }
-        }.resume()
+        completion(.success("sv8"))
     }
-    
+
     func fetchCards(fromCollection collectionID: String, completion: @escaping (Result<[Card], Error>) -> Void) {
         guard let url = URL(string: "\(baseURL)/cards?q=set.id:\(collectionID)") else {
             completion(.failure(NSError(domain: "Invalid URL", code: -1, userInfo: nil)))
@@ -63,20 +32,13 @@ class PokemonAPI {
             do {
                 let decoder = JSONDecoder()
                 let response = try decoder.decode(CardResponse.self, from: data)
-
-                let cards = response.data.map { card -> Card in
-                    var mutableCard = card
-                    mutableCard.setID = collectionID
-                    return mutableCard
-                }
-
-                completion(.success(cards))
+                completion(.success(response.data))
             } catch {
                 completion(.failure(error))
             }
         }.resume()
     }
-    
+
     func fetchAllTypes(completion: @escaping (Result<[String], Error>) -> Void) {
         guard let url = URL(string: "\(baseURL)/types") else {
             completion(.failure(NSError(domain: "Invalid URL", code: -1, userInfo: nil)))
@@ -107,7 +69,6 @@ class PokemonAPI {
             }
         }.resume()
     }
-
 }
 
 // Modelos de Datos
