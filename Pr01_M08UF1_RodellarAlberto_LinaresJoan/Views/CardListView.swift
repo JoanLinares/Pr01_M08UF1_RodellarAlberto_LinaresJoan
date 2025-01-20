@@ -108,7 +108,7 @@ struct CardListView: View {
                 }
                 
                 HStack {
-                    TextField("Search by card name or ID", text: $searchText)
+                    TextField("Search by card name", text: $searchText)
                         .padding()
                         .background(Color(.systemGray6))
                         .cornerRadius(8)
