@@ -9,29 +9,53 @@ struct MenuView: View {
             let isLandscape = geometry.size.width > geometry.size.height
 
             NavigationView {
-                VStack {
+                VStack(spacing: 8) { // Espaciado reducido entre elementos
+                    // Título "Cards" centrado
                     Text("Cards")
                         .font(.largeTitle)
                         .fontWeight(.bold)
-                        .padding(.top)
+                        .frame(maxWidth: .infinity, alignment: .center)
+                        .padding(.top, 8) // Espacio reducido arriba
 
                     if viewModel.maxPriceLimit > 0 {
-                        VStack {
-                            Text("Filter by Price")
-                                .font(.headline)
-                                .padding(.top)
-
+                        if isLandscape {
+                            // Horizontal: "Filter by Price" y el $0 en la misma línea
                             HStack {
+                                Text("Filter by Price")
+                                    .font(.headline)
                                 Text("$\(Int(minPrice))")
+                                    .font(.headline)
+                                    .foregroundColor(.gray)
+                                
                                 Slider(value: $minPrice, in: 0...viewModel.maxPriceLimit, step: 5)
-                                    .onChange(of: minPrice) { _ in
-                                        viewModel.filterCards(minPrice: minPrice)
+                                    .onChange(of: minPrice) { newValue in
+                                        viewModel.filterCards(minPrice: newValue)
                                     }
+                                
                                 Text("Max: $\(Int(viewModel.maxPriceLimit))")
                                     .font(.headline)
                                     .foregroundColor(.gray)
                             }
                             .padding(.horizontal)
+                        } else {
+                            // Vertical: "Filter by Price" centrado
+                            VStack(spacing: 4) {
+                                Text("Filter by Price")
+                                    .font(.headline)
+                                    .frame(maxWidth: .infinity, alignment: .center) // Centrar horizontalmente
+                                
+                                HStack {
+                                    Text("$\(Int(minPrice))")
+                                    Slider(value: $minPrice, in: 0...viewModel.maxPriceLimit, step: 5)
+                                        .onChange(of: minPrice) { newValue in
+                                            viewModel.filterCards(minPrice: newValue)
+                                        }
+                                    Text("Max: $\(Int(viewModel.maxPriceLimit))")
+                                        .font(.headline)
+                                        .foregroundColor(.gray)
+                                }
+                                .padding(.horizontal)
+                            }
                         }
                     }
 
@@ -89,7 +113,9 @@ struct MenuView: View {
                     .padding(.bottom)
                 }
                 .onAppear {
-                    viewModel.loadCards()
+                    if viewModel.filteredCards.isEmpty {
+                        viewModel.loadCards() // Cargar cartas al inicio si aún no se han cargado
+                    }
                 }
                 .alert(item: $viewModel.error) { error in
                     Alert(title: Text("Error"), message: Text(error.message), dismissButton: .default(Text("OK")))
